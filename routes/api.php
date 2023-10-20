@@ -34,9 +34,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/posts/{id}', [PostController::class,'update']);//actualizar post
     Route::delete('/posts/{id}', [PostController::class,'destroy']);//eliminar post
     //comment
-    Route::get('/posts/comments', [CommentController::class, 'index']);//todos los comentarios
-    Route::post('/posts/comments', [CommentController::class,'store']);//crear comentario
-    Route::get('/comment/{id}', [CommentController::class,'show']);//mostrar comentario
+    Route::get('/posts/{id}/comments', [CommentController::class, 'index']);//todos los comentarios
+    Route::post('/posts/{id}/comments', [CommentController::class,'store']);//crear comentario
     Route::put('/comments/{id}', [CommentController::class,'update']);//actualizar comentario
     Route::delete('/comments/{id}', [CommentController::class,'destroy']);//eliminar comentario
     //like    

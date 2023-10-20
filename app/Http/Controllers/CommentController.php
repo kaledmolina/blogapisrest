@@ -18,7 +18,7 @@ class CommentController extends Controller
            ], 403);
        }
        return response()->json([
-           'post' => $post->comments()->with('user:id,name,image')->get()
+           'comments' => $post->comments()->with('user:id,name,image')->get()
            ],200);
    }
    //crear comentario
@@ -40,8 +40,7 @@ class CommentController extends Controller
            'user_id' => auth()->user()->id,
        ]); 
        return response()->json([
-           'message' => 'Comentario creado correctamente',
-           'post' => $post->comments()->with('user:id,name,image')->get()
+           'message' => 'Comentario creado correctamente'
            ],200);
 
    }
