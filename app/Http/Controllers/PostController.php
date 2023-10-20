@@ -15,6 +15,10 @@ class PostController extends Controller
                 $posts = Post::orderBy('created_at', 'desc')
                     ->with('user:id,name,image')
                     ->withCount('comments', 'likes')
+                    ->with('likes', function ($like) {
+                       return $like->where('user_id', auth()->user()->id)
+                            ->select('id', 'post_id', 'user_id')->get();
+                    })
                     ->get();
 
                 return response()->json($posts, 200); // Aquí especificamos el código de estado 200
@@ -44,9 +48,11 @@ class PostController extends Controller
         $request->validate([
             'body' => 'required|string',
         ]);
+        $image = $this->saveImage($request->image, 'posts');
         $post = Post::create([
             'body' => $request->body,
             'user_id' => auth()->user()->id,
+            'image' => $image
         ]); 
         return response()->json([
             'message' => 'Post creado correctamente',

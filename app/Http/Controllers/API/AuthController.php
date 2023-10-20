@@ -117,4 +117,21 @@ class AuthController extends Controller
         }
     }
 
+    //editar usuario
+    public function update (Request $request){
+        //validamos los datos
+        $request->validate([
+            'name' => 'required|string'
+        ]);
+        $image = $this->saveImage($request->image, 'profiles');
+        auth()->user()->update([
+            'name' => $request->name,
+            'image' => $image
+        ]);
+        return response()->json([
+            'message' => 'Usuario actualizado correctamente',
+            'user' => auth()->user()
+        ], 200);
+    }
+
 }
